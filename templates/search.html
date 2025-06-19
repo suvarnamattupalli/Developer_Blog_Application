@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <title>Search Results</title>
+</head>
+<body>
+
+     <!-- Navigation bar -->
+     <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">DEVELOPERS BLOG</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="Dropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Click me
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="Dropdown">
+                        <a class="dropdown-item" href="{{url_for('blog_list')}}">My Blogs List</a>
+                        <a class="dropdown-item" href="{{url_for('new_blog')}}">Add new BLOG</a>
+                        <a class="dropdown-item" href="#">Archived Blogs</a>
+                    </div>
+                </li>
+
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Hello,{{session.get('user')}}</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('logout')}}">logout</a>
+                </li>
+            </ul>
+
+    
+
+    <form method="post" action="{{ url_for('search') }}">
+        <input type="text" name="search_query" placeholder="Enter your search query">
+        <button type="submit">Search</button>
+    </form>
+</nav>
+   
+
+        <!-- Add Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+
+<h1>Search Results</h1>
+
+{% if blog_posts %}
+<h2>Matching Blogs:</h2>
+<ul>
+    {% for blog in blog_posts %}
+        <li><a href="{{ url_for('view_blog', id=blog[0]) }}">{{ blog[1] }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No blogs found.</p>
+{% endif %}
+
+</html>
